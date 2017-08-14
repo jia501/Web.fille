@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>中国移动</title>
+	<script src="../../Classroom/js/animate.js"></script>
+	<style>
+	.box{width: 1170px;height: 160px;padding: 10px 15px;background: #dfdfdf;
+		margin: 30px auto;position: relative;overflow: hidden;}
+	.box .innerbox{width: 2065px;height: 100%;position: absolute;left: 0;top: 0;
+		cursor: pointer;}
+	.box .innerbox .imgbox{width: 285px;height: 100%;margin-right: 10px;float: left;margin-left:6px;cursor: pointer;}
+	.box .innerbox .imgbox img{width: 100%;margin-top: 23px;cursor: pointer;}
+	.btnbox{width: 100%;height: 50px;/*background: rgba(0,0,0,0.6);*/
+		position:absolute;left: 0;top: 0;margin-top: 70px;font-size: 18px;
+		line-height: 50px;color: #fff;}
+	.left{width: 50px;height: 50px;background: green;float: left;
+		text-align: center;cursor: pointer;}
+	.right{width: 50px;height: 50px;background: green;float: right;
+		text-align: center;cursor: pointer;}
+
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="innerbox">
+			<div class="imgbox"><img src="1sh.jpg" alt="">1</div>
+			<div class="imgbox"><img src="2sh.jpg" alt="">2</div>
+			<div class="imgbox"><img src="3sh.jpg" alt="">3</div>
+			<div class="imgbox"><img src="4sh.jpg" alt="">4</div>
+			<div class="imgbox"><img src="5sh.jpg" alt="">5</div>
+			<div class="imgbox"><img src="6sh.jpg" alt="">6</div>
+			<div class="imgbox"><img src="7sh.jpg" alt="">7</div>
+		</div>
+		<div class="btnbox">
+			<div class="left" onclick="bb(flag=true)">&lt;</div>
+			<div class="right" onclick="bb(flag=false)">&gt;</div>
+		</div>
+	</div>
+	<script>
+
+		function getChilds(obj){
+			var childs=obj.childNodes;
+			var arr=[];
+			for (var i = 0; i < childs.length; i++) {
+				if(childs[i].nodeType==3&&/^\s*$/.test(childs[i].nodeValue)){
+					continue;
+				};
+				arr.push(childs[i]);
+			};
+			return arr;
+};
+	var innerbox=document.getElementsByClassName("innerbox")[0];
+	console.log(getChilds(innerbox)[0]);
+// 点击切换
+	var flag=true;
+	var timer=null;
+	function bb(n){
+		if(n){
+			animate(innerbox,{left:-295},function(){
+				var child1=getChilds(innerbox)[0];
+				innerbox.appendChild(child1);
+				innerbox.style.left=0;
+			});		
+		}else{
+			innerbox.style.left="-295px";
+			var child1=getChilds(innerbox)[0];
+			var child7=getChilds(innerbox)[6];
+			innerbox.insertBefore(child7,child1);
+			animate(innerbox,{left:0});
+		}
+};
+// 左右切换轮播
+	function tt(){
+		bb(flag)
+	}
+	timer=setInterval(tt,3000);
+	var box=document.getElementsByClassName("box")[0];
+	   box.onmouseover=function(){
+       clearInterval(timer)
+     }
+     box.onmouseout=function(){
+       timer=setInterval(tt,3000)
+     }
+	</script>
+</body>
+</html>
